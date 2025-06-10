@@ -1,10 +1,10 @@
 <?php
 
 use Lib\Route;
+use App\Controllers\HomeController;
 
-Route::get('/', function () {
-    return 'Hola desde la ruta principal';
-});
+Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/contacto', function () {
     return 'Hola desde la ruta contacto';
 });
