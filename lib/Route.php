@@ -25,8 +25,18 @@ class Route
         $url = trim($url, '/');
 
         foreach (self::$routes[$method] as $route => $callback) {
-            if ($url == $route) {
-                $callback();
+            if (strpos($route, ':') !== false) {
+                $route = preg_replace('#:[a-zA-Z0-9]+#', '([a-zA-Z0-9]+)', $route);
+            }
+            if (preg_match("#^$route$#", $url, $matches)) {
+                $params = array_slice($matches, 1);
+                $response = $callback(...$params);
+                if (is_array($response) || is_object($response)) {
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                } else {
+                    echo $response;
+                }
                 return;
             }
         }
