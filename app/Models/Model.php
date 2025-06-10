@@ -59,6 +59,14 @@ class Model
             $value = $operator;
             $operator = '=';
         }
+
+        /*
+         Prevención de inyección SQL: Escapa caracteres especiales en el valor
+         para evitar ataques de inyección SQL. Se recomienda usar consultas preparadas
+         para una mayor seguridad en entornos de producción.
+        */
+        $value = $this->connection->real_escape_string($value);
+
         $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} '{$value}'";
         $this->query($sql);
         return $this;
