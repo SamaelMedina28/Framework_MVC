@@ -71,4 +71,15 @@ class Model
         $this->query($sql);
         return $this->find($this->connection->insert_id);
     }
+    public function update($id, $data)
+    {
+        $fields = [];
+        foreach ($data as $column => $value) {
+            $fields[] = "{$column} = '{$value}'";
+        }
+        $fields = implode(',', $fields);
+        $sql = "UPDATE {$this->table} SET $fields WHERE id = $id";
+        $this->query($sql);
+        return $this->find($id);
+    }
 }
