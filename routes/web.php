@@ -6,7 +6,7 @@ use App\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/contacto', function () {
-    return 'Hola desde la ruta contacto';
+    return "Contacto";
 });
 Route::get('/cursos/:slug', function ($slug) {
     return [
