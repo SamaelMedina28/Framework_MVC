@@ -6,6 +6,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return $this->view('home');
+        $title = [
+            'Controlador' => 'HomeController',
+            'Metodo' => 'index'
+        ];
+        
+        return $this->view('home', $title);
     }
 }
