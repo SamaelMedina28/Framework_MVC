@@ -8,11 +8,6 @@ class HomeController extends Controller
     public function index()
     {
         $task = new Task();
-        $title = [
-            'Controlador' => 'HomeController',
-            'Metodo' => 'index'
-        ];
-        
-        return $this->view('home', $title);
+        return $task->query("SELECT * FROM tasks")->get();
     }
 }
