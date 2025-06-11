@@ -28,9 +28,19 @@ class Model
     }
 
 
-    public function query($sql)
+    public function query($sql, $data = [], $params = null)
     {
-        $this->query = $this->connection->query($sql);
+        if($data){
+            if($params === null){
+                $params = str_repeat("s", count($data));
+            }
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bind_param($params, ...$data);
+            $stmt->execute();
+            $this->query = $stmt->get_result();
+        }else{
+            $this->query = $this->connection->query($sql);
+        }
         return $this;
     }
     public function first()
@@ -50,8 +60,8 @@ class Model
     }
     public function find($id)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE id = $id";
-        return $this->query($sql)->first();
+        $sql = "SELECT * FROM {$this->table} WHERE id = ?";
+        return $this->query($sql, [$id], "i")->first();
     }
     public function where($column, $operator, $value = null)
     {
@@ -59,40 +69,33 @@ class Model
             $value = $operator;
             $operator = '=';
         }
-
-        /*
-         Prevención de inyección SQL: Escapa caracteres especiales en el valor
-         para evitar ataques de inyección SQL. Se recomienda usar consultas preparadas
-         para una mayor seguridad en entornos de producción.
-        */
-        $value = $this->connection->real_escape_string($value);
-
-        $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} '{$value}'";
-        $this->query($sql);
-        return $this;
+        $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} ?";
+        return $this->query($sql, [$value], "s");
     }
     public function create($data)
     {
         $columns = implode(',', array_keys($data));
-        $values = implode("','", array_values($data));
-        $sql = "INSERT INTO {$this->table} ($columns) VALUES ('$values')";
-        $this->query($sql);
+        $values = array_values($data);
+        $sql = "INSERT INTO {$this->table} ($columns) VALUES (" . str_repeat("?, ", count($values)-1) . "?)";
+        $this->query($sql, $values, str_repeat("s", count($values)));
         return $this->find($this->connection->insert_id);
     }
     public function update($id, $data)
     {
         $fields = [];
         foreach ($data as $column => $value) {
-            $fields[] = "{$column} = '{$value}'";
+            $fields[] = "{$column} = ?";
         }
         $fields = implode(',', $fields);
-        $sql = "UPDATE {$this->table} SET $fields WHERE id = $id";
-        $this->query($sql);
+        $sql = "UPDATE {$this->table} SET $fields WHERE id = ?";
+        $values = array_values($data);
+        $values[] = $id;
+        $this->query($sql, $values);
         return $this->find($id);
     }
     public function delete($id)
     {
-        $sql = "DELETE FROM {$this->table} WHERE id = $id";
-        $this->query($sql);
+        $sql = "DELETE FROM {$this->table} WHERE id = ?";
+        $this->query($sql, [$id], 'i');
     }
 }
