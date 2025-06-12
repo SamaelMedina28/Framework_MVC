@@ -17,17 +17,17 @@ class HomeController extends Controller
         
         return $task->find($id);
     }
-    public function create($data)
+    public function create()
     {
-        $task = new Task();
-        
-        return $task->create($data);
+        return $this->view('tasks.create');
     }
-    public function store($data)
+    public function store()
     {
         $task = new Task();
+        $data = $_POST;
         
-        return $task->create($data);
+        $task->create($data);
+        header('Location: /tasks');
     }
     public function edit($id)
     {

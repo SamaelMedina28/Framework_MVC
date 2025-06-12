@@ -8,10 +8,10 @@ Route::get('/', function () {
 });
 //Mostrar todos
 Route::get('/tasks', [HomeController::class, 'index']);
-//Mostrar uno
-Route::get('/tasks/:id', [HomeController::class, 'show']);
 //Crear
 Route::get('/tasks/create', [HomeController::class, 'create']);
+//Mostrar uno
+Route::get('/tasks/:id', [HomeController::class, 'show']);
 //Guardar
 Route::post('/tasks', [HomeController::class, 'store']);
 // Editar
