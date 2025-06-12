@@ -8,8 +8,8 @@ class HomeController extends Controller
     public function index()
     {
         $task = new Task();
-        
-        return $task->all();
+        $tasks = $task->all();
+        return $this->view('tasks.index',compact('tasks'));
     }
     public function show($id)
     {
@@ -23,6 +23,18 @@ class HomeController extends Controller
         
         return $task->create($data);
     }
+    public function store($data)
+    {
+        $task = new Task();
+        
+        return $task->create($data);
+    }
+    public function edit($id)
+    {
+        $task = new Task();
+        
+        return $task->find($id);
+    }
     public function update($id, $data)
     {
         $task = new Task();
@@ -33,6 +45,8 @@ class HomeController extends Controller
     {
         $task = new Task();
         
-        return $task->delete($id);
+        $task->delete($id);
+        header('Location: /tasks');
+
     }
 }

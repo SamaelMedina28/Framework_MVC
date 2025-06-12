@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Controller
 {
-    public function view($route, $data = [])
+    public static function view($route, $data = [])
     {
         extract($data);
         $route = str_replace('.', '/', $route);

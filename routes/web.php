@@ -3,21 +3,23 @@
 use Lib\Route;
 use App\Controllers\HomeController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', function () {
+    return HomeController::view('home');
+});
 //Mostrar todos
-Route::get('/contacts', [HomeController::class, 'index']);
+Route::get('/tasks', [HomeController::class, 'index']);
 //Mostrar uno
-Route::get('/contacts/:id', [HomeController::class, 'show']);
+Route::get('/tasks/:id', [HomeController::class, 'show']);
 //Crear
-Route::get('/contacts/create', [HomeController::class, 'create']);
+Route::get('/tasks/create', [HomeController::class, 'create']);
 //Guardar
-Route::post('/contacts', [HomeController::class, 'store']);
+Route::post('/tasks', [HomeController::class, 'store']);
 // Editar
-Route::get('/contacts/:id/edit', [HomeController::class, 'edit']);
+Route::get('/tasks/:id/edit', [HomeController::class, 'edit']);
 // Actualizar
-Route::post('/contacts/:id', [HomeController::class, 'update']);
+Route::post('/tasks/:id', [HomeController::class, 'update']);
 // Eliminar
-Route::post('/contacts/:id/delete', [HomeController::class, 'delete']);
+Route::post('/tasks/:id/delete', [HomeController::class, 'delete']);
 
 
 Route::dispatch();

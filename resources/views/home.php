@@ -7,7 +7,5 @@
 </head>
 <body>
     <h1>Home</h1>
-    <p>Controlador: <?php echo $Controlador; ?></p>
-    <p>Metodo: <?php echo $Metodo; ?></p>
 </body>
 </html>
