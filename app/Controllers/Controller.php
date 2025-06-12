@@ -18,4 +18,8 @@ class Controller
             return 'Esta vista no existe';
         }
     }
+    public static function redirect($route)
+    {
+        header('Location: ' . $route);
+    }
 }

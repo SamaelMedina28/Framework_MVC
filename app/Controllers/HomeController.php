@@ -14,8 +14,8 @@ class HomeController extends Controller
     public function show($id)
     {
         $task = new Task();
-        
-        return $task->find($id);
+        $task = $task->find($id);
+        return $this->view('tasks.show', compact('task'));
     }
     public function create()
     {
@@ -25,28 +25,27 @@ class HomeController extends Controller
     {
         $task = new Task();
         $data = $_POST;
-        
         $task->create($data);
-        header('Location: /tasks');
+        $this->redirect('/tasks');
     }
     public function edit($id)
     {
         $task = new Task();
-        
-        return $task->find($id);
+        $task = $task->find($id);
+        return $this->view('tasks.edit', compact('task'));
     }
-    public function update($id, $data)
+    public function update($id)
     {
         $task = new Task();
-        
-        return $task->update($id, $data);
+        $data = $_POST;
+        $task->update($id, $data);
+        $this->redirect('/tasks/'.$id); 
     }
     public function delete($id)
     {
         $task = new Task();
-        
         $task->delete($id);
-        header('Location: /tasks');
+        $this->redirect('/tasks');
 
     }
 }
