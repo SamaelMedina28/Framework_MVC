@@ -14,6 +14,8 @@ class Model
     protected $query;
     protected $table; 
 
+    protected $sql, $data =[], $params = null;
+
     public function __construct()
     {
         $this->connection();
@@ -45,18 +47,29 @@ class Model
     }
     public function first()
     {
+        if(empty($this->query)){
+            $this->query($this->sql, $this->data, $this->params);
+        }
         return $this->query->fetch_assoc();
     }
     public function get()
     {
+        if(empty($this->query)){
+            $this->query($this->sql, $this->data, $this->params);
+        }
         return $this->query->fetch_all(MYSQLI_ASSOC);
     }
     public function paginate($cant = 3)
     {
         $page = $_GET['page'] ?? 1; 
         $offset = ($page - 1) * $cant;
-        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM {$this->table} LIMIT {$offset}, {$cant}";
-        $data = $this->query($sql)->get();
+        if($this->sql){
+            $sql = $this->sql . " LIMIT {$offset}, {$cant}";
+            $data = $this->query($sql, $this->data, $this->params)->get();
+        }else{
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM {$this->table} LIMIT {$offset}, {$cant}";
+            $data = $this->query($sql)->get();
+        }
         $total = $this->query("SELECT FOUND_ROWS() as total")->first()['total'];
         $total_pages = ceil($total / $cant);
         $prev_page = $page - 1 < 1 ? null :"?page=". $page - 1;
@@ -90,8 +103,9 @@ class Model
             $value = $operator;
             $operator = '=';
         }
-        $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} ?";
-        return $this->query($sql, [$value], "s");
+        $this->sql = "SELECT SQL_CALC_FOUND_ROWS * FROM {$this->table} WHERE {$column} {$operator} ?";
+        $this->data[] = $value;
+        return $this;
     }
     public function create($data)
     {

@@ -9,9 +9,9 @@ class HomeController extends Controller
     {
         $task = new Task();
         if(isset($_GET['search'])){
-            $tasks = $task->where('titulo', 'like', '%'.$_GET['search'].'%')->get();
+            $tasks = $task->where('titulo', 'like', '%'.$_GET['search'].'%')->paginate(3);
         }else{
-            $tasks = $task->all();
+            $tasks = $task->paginate(3);
         }
         return $this->view('tasks.index',compact('tasks'));
     }

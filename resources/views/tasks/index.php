@@ -16,7 +16,7 @@
             <input class="border border-gray-300 rounded px-2 py-1" type="text" placeholder="Buscar" name="search">
             <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors" type="submit">Buscar</button>
         </form>
-        <?php foreach ($tasks as $task) { ?>
+        <?php foreach ($tasks['data'] as $task) { ?>
             <li class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center justify-between">
                 <a href="/tasks/<?= $task['id'] ?>" class="text-blue-600 hover:text-blue-800 font-medium">
                     <?= $task['titulo'] ?>
@@ -40,10 +40,10 @@
 
 
 
-    <!-- <?php 
+    <?php 
         $paginate = 'tasks';
         require_once '../resources/views/assets/pagination.php' 
-    ?> -->
+    ?>
 
 
 </body>
