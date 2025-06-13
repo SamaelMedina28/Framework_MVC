@@ -8,7 +8,11 @@ class HomeController extends Controller
     public function index()
     {
         $task = new Task();
-        $tasks = $task->paginate(3);
+        if(isset($_GET['search'])){
+            $tasks = $task->where('titulo', 'like', '%'.$_GET['search'].'%')->get();
+        }else{
+            $tasks = $task->all();
+        }
         return $this->view('tasks.index',compact('tasks'));
     }
     public function show($id)
