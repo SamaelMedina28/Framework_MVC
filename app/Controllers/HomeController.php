@@ -10,6 +10,7 @@ class HomeController extends Controller
         $task = new Task();
         $tasks = $task->paginate(3);
         // $tasks = $task->all();
+        return $tasks;
 
         return $this->view('tasks.index',compact('tasks'));
     }

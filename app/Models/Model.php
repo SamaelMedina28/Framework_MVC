@@ -53,10 +53,22 @@ class Model
     }
     public function paginate($cant = 3)
     {
-        $page = $_GET['page'] ?? 1;
+        $page = $_GET['page'] ?? 1; 
         $offset = ($page - 1) * $cant;
-        $sql = "SELECT * FROM {$this->table} LIMIT {$offset}, {$cant}";
-        return $this->query($sql)->get();
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM {$this->table} LIMIT {$offset}, {$cant}";
+        $data = $this->query($sql)->get();
+        $total = $this->query("SELECT FOUND_ROWS() as total")->first()['total'];
+        $total_pages = ceil($total / $cant);
+        $prev_page = $page - 1 < 1 ? null : $page - 1;
+        $next_page = $page + 1 > $total_pages ? null : $page + 1;
+        return [
+            'total' => $total,
+            'from' => $offset + 1,
+            'to' => $offset + count($data),
+            'next_page' => $next_page,
+            'prev_page' => $prev_page,
+            'data' => $data,
+        ];
     }
 
     // Consultas
