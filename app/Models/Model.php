@@ -59,12 +59,14 @@ class Model
         $data = $this->query($sql)->get();
         $total = $this->query("SELECT FOUND_ROWS() as total")->first()['total'];
         $total_pages = ceil($total / $cant);
-        $prev_page = $page - 1 < 1 ? null : $page - 1;
-        $next_page = $page + 1 > $total_pages ? null : $page + 1;
+        $prev_page = $page - 1 < 1 ? null :"?page=". $page - 1;
+        $next_page = $page + 1 > $total_pages ? null : "?page=".$page + 1;
         return [
             'total' => $total,
             'from' => $offset + 1,
             'to' => $offset + count($data),
+            'current_page' => $page,
+            'total_pages' => $total_pages,
             'next_page' => $next_page,
             'prev_page' => $prev_page,
             'data' => $data,
