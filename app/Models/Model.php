@@ -51,6 +51,13 @@ class Model
     {
         return $this->query->fetch_all(MYSQLI_ASSOC);
     }
+    public function paginate($cant = 3)
+    {
+        $page = $_GET['page'] ?? 1;
+        $offset = ($page - 1) * $cant;
+        $sql = "SELECT * FROM {$this->table} LIMIT {$offset}, {$cant}";
+        return $this->query($sql)->get();
+    }
 
     // Consultas
     public function all()

@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Task</h1>
+    <a href="/tasks">Volver</a>
     <p><?=$task['titulo']?></p>
     <p><?=$task['descripcion']?></p>
     <p><?=ucfirst(str_replace('_', ' ', $task['estado']))?></p>

@@ -8,7 +8,9 @@ class HomeController extends Controller
     public function index()
     {
         $task = new Task();
-        $tasks = $task->all();
+        $tasks = $task->paginate(3);
+        // $tasks = $task->all();
+
         return $this->view('tasks.index',compact('tasks'));
     }
     public function show($id)

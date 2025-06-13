@@ -23,6 +23,11 @@ class Route
         $method = $_SERVER['REQUEST_METHOD'];
         $url = $_SERVER['REQUEST_URI'];
         $url = trim($url, '/');
+        
+        if(strpos($url, '?')){
+           $url = substr($url, 0, strpos($url, '?'));
+        }
+
 
         foreach (self::$routes[$method] as $route => $callback) {
             if (strpos($route, ':') !== false) {
