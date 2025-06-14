@@ -9,6 +9,8 @@ class HomeController extends Controller
     {
         $task = new Task();
 
+        // return $task->where('id', '>', 65)->where('titulo', 'like', '%'.'tarea'.'%')->orderBy('id','DESC')->first();
+
         if(isset($_GET['search'])){
             $tasks = $task->where('titulo', 'like', '%'.$_GET['search'].'%')->orderBy('id','DESC')->paginate(3);
         }else{
