@@ -104,17 +104,7 @@
         <?php endif; ?>
     </div>
 
-    <script>
-        // Añadir animación suave al hacer clic en los botones
-        document.querySelectorAll('button, a[href^="/"]').forEach(button => {
-            button.addEventListener('click', function() {
-                this.classList.add('transform', 'scale-95');
-                setTimeout(() => {
-                    this.classList.remove('transform', 'scale-95');
-                }, 150);
-            });
-        });
-    </script>
+
 </body>
 
 </html>
