@@ -14,17 +14,17 @@ class HomeController extends Controller
         }else{
             $tasks = $task->orderBy('id','DESC')->paginate(3);
         }
-        return $this->view('tasks.index',compact('tasks'));
+        return view('tasks.index',compact('tasks'));
     }
     public function show($id)
     {
         $task = new Task();
         $task = $task->find($id);
-        return $this->view('tasks.show', compact('task'));
+        return view('tasks.show', compact('task'));
     }
     public function create()
     {
-        return $this->view('tasks.create');
+        return view('tasks.create');
     }
     public function store()
     {
@@ -37,7 +37,7 @@ class HomeController extends Controller
     {
         $task = new Task();
         $task = $task->find($id);
-        return $this->view('tasks.edit', compact('task'));
+        return view('tasks.edit', compact('task'));
     }
     public function update($id)
     {

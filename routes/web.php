@@ -4,7 +4,7 @@ use Lib\Route;
 use App\Controllers\HomeController;
 
 Route::get('/', function () {
-    return HomeController::view('home');
+    return view('home');
 });
 //Mostrar todos
 Route::get('/tasks', [HomeController::class, 'index']);
