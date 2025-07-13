@@ -77,25 +77,25 @@
                 </div>
 
                 <!-- Botones de acción -->
-                <div class="flex justify-between pt-4">
-                    <form action="/tasks/<?= htmlspecialchars($task['id']) ?>/delete" method="post" class="inline">
-                        <button type="submit"
-                            class="text-red-600 hover:text-red-800 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors flex items-center"
-                            onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
-                            <i class="fas fa-trash mr-2"></i> Eliminar Tarea
-                        </button>
-                    </form>
-                    <div class="space-x-3 flex flex-end">
-                        <a href="/tasks" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
-                            Cancelar
-                        </a>
-                        <button type="submit"
-                            class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center">
-                            <i class="fas fa-save mr-2"></i> Guardar Cambios
-                        </button>
-                    </div>
-                </div>
             </form>
+            <div class="flex justify-between pt-4">
+                <form action="/tasks/<?= htmlspecialchars($task['id']) ?>/delete" method="post" class="inline">
+                    <button type="submit"
+                        class="text-red-600 hover:text-red-800 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors flex items-center"
+                        onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                        <i class="fas fa-trash mr-2"></i> Eliminar Tarea
+                    </button>
+                </form>
+                <div class="space-x-3 flex flex-end">
+                    <a href="/tasks" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm hover:shadow-md transition-all flex items-center">
+                        <i class="fas fa-save mr-2"></i> Guardar Cambios
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
